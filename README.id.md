@@ -43,22 +43,20 @@ Soal dipindahkan dari PDF ke JSON dengan bantuan **Claude Code**.
 
 ## Soal bergambar
 
-Jev hanya membaca teks. Ada sepuluh gambar di dataset ini: diagram garis,
-diagram lingkaran, bangun geometri, dan satu definisi operator. Semua gambar
-**diubah menjadi teks oleh Claude**, lalu dicek manual dengan gambar aslinya.
-Satu transkrip diperbaiki dari pengecekan ini: di `LBI-d1s1-teks2`, dua garis
+Karena Jev hanya bisa membaca teks, semua soal bergambar **diubah menjadi teks oleh Claude Opus 5**
+Ada juga hal yang disadari oleh Opus 5 selama pengerjaan dan audit, bahwa di `LBI-d1s1-teks2`, dua garis
 yang awalnya disebut sejajar ternyata tidak sejajar setelah kemiringannya
-diukur.
+diukur sehingga harus di perbaiki manual oleh Opus 5.
 
 ## Sumber jawaban acuan
 
-**PU, PK, dan PM memakai kunci modul.** Kunci ini tetap diperiksa ulang karena
-penyusunnya sendiri tidak menjamin kebenarannya.
+**PU, PK, dan PM** yang memakai kunci jawaban modul, diperiksa ulang dengan opus 5
+karena penyusunnya sendiri tidak menjamin kebenarannya.
 
-**PPU, PBM, LBI, dan LBE memakai label dari Claude Opus 5**, karena modul tidak
+Untuk **PPU, PBM, LBI, dan LBE5**, karena modul tidak
 menyediakan kunci. Label ini hanya dari satu model, jadi belum tentu benar.
 
-## Cara soal dikirim ke Jev
+## Cara request ke Jev
 
 Setiap soal dikirim sebagai satu request ke `POST
 https://api.typesafe.ai/v1/systemone`. Semua payload ditulis dulu ke disk oleh
@@ -74,7 +72,7 @@ soal itu sendiri. Ada dua pengecualian:
   opsi, yang diukur adalah opsi buatan itu, bukan modelnya. Jadi ketiganya
   tidak dipakai, dan yang dinilai 67 soal, bukan 70.
 
-## Menjalankan benchmark
+## Run skrip benchmark
 
 ```bash
 python3 scripts/build_requests.py        # tulis payload request
@@ -96,11 +94,12 @@ python3 scripts/score.py --combined      # semua 156 soal
 
 `data/results/` sudah berisi hasil run yang dipublikasikan. Runner akan
 melewati soal yang jawabannya sudah ada, jadi perintah di atas bisa dijalankan
-tanpa kunci API. Untuk run baru, simpan hasilnya ke file lain dengan
+tanpa kunci API.
+Untuk run baru, simpan hasilnya ke file lain dengan
 `--out data/results/rerun.jsonl`, lalu pakai path yang sama di
 `scripts/score.py --results`.
 
-Kalau run terputus, cukup jalankan ulang perintahnya. Respons 408, 429, dan 5xx
+Jika run terputus selama proses, cukup jalankan ulang perintahnya. Respons 408, 429, dan 5xx
 otomatis dicoba ulang, dan request yang gagal tetap dicatat tanpa menghentikan
 run.
 
@@ -110,19 +109,22 @@ latensi.
 
 ## Ringkasan hasil
 
+Table ini memisahkan soal yang menggunakan kunci jawaban bawaan modul dari Tim MMA,
+dan kunci jawaban yang dibuat oleh Opus 5.
+
 | Kelompok soal | Skor |
 |---|---|
-| 67 soal, kunci modul | 47,8% |
-| 89 soal, label Claude | 85,4% |
-| 156 soal, gabungan | 69,2% |
+| 67 soal, kunci jawaban modul | 47,8% |
+| 89 soal, kunci jawaban dari Claude | 85,4% |
+| 156 soal, gabungan keduanya | 69,2% |
 
 Rincian lengkap ada di **[RESULTS.id.md](RESULTS.id.md)**.
 
 ## Isi repositori
 
 ```
-data/questions/with_key/        PU, PK, PM (jawaban dari kunci modul)
-data/questions/claude_labeled/  PPU, PBM, LBI, LBE (jawaban dari label Claude)
+data/questions/with_key/        PU, PK, PM (kunci jawaban dari modul)
+data/questions/claude_labeled/  PPU, PBM, LBI, LBE (kunci jawaban dari label Claude)
 data/audit/                     hasil pemeriksaan kunci modul dan soal yang meragukan
 data/figures/                   potongan gambar asli
 data/results/                   hasil run di RESULTS.id.md, satu baris per soal
