@@ -2,35 +2,31 @@
 
 [English](RESULTS.md) · **Bahasa Indonesia**
 
-Model `jev-1.13.0` (dipanggil sebagai `jev-latest`), dijalankan 18 September
-2026. Total 156 soal, satu request per soal, gambar dikirim dalam bentuk teks.
-Tidak ada request yang perlu diulang.
+Model yang digunakan adalah `jev-latest` dimana disaat pembuatan pengujian ini adalah `jev-1.13.0`, dijalankan 18 September
+2026. Total 156 soal, satu request per soal, gambar dikirim dalam bentuk teks yang di buat oleh Opus 5.
 
 ## Skor per subtes
 
 | Subtes | Skor | Soal | Acuan |
 |---|---|---|---|
-| LBE (Literasi Bahasa Inggris) | 100,0% | 20/20 | label Claude |
-| LBI (Literasi Bahasa Indonesia) | 89,7% | 26/29 | label Claude |
-| PBM (Pemahaman Bacaan dan Menulis) | 75,0% | 15/20 | label Claude |
-| PPU (Pengetahuan dan Pemahaman Umum) | 75,0% | 15/20 | label Claude |
-| PU (Penalaran Umum) | 60,0% | 18/30 | kunci modul |
-| PM (Penalaran Matematika) | 45,0% | 9/20 | kunci modul |
-| PK (Pengetahuan Kuantitatif) | 29,4% | 5/17 | kunci modul |
+| LBE (Literasi Bahasa Inggris) | 100,0% | 20/20 | Kunci jawaban dari Claude |
+| LBI (Literasi Bahasa Indonesia) | 89,7% | 26/29 | Kunci jawaban dari Claude |
+| PBM (Pemahaman Bacaan dan Menulis) | 75,0% | 15/20 | Kunci jawaban dari Claude |
+| PPU (Pengetahuan dan Pemahaman Umum) | 75,0% | 15/20 | Kunci jawaban dari Claude |
+| PU (Penalaran Umum) | 60,0% | 18/30 | kunci jawaban modul |
+| PM (Penalaran Matematika) | 45,0% | 9/20 | kunci jawaban modul |
+| PK (Pengetahuan Kuantitatif) | 29,4% | 5/17 | kunci jawaban modul |
 
-## Skor per jenis acuan
+## Skor berdasarkan jenis acuan
+
+Table ini membedakan skor berdasarkan kunci jawaban yang dibuat Claude, Kunci Modul MMA, dan Gabungan keduanya (154 Soal, dua soal yang meragukan ditinggalkan).
 
 | Kelompok soal | Skor | Soal |
 |---|---|---|
-| Kunci modul | 47,8% | 32/67 |
-| Kunci modul, tanpa dua soal yang kuncinya meragukan | 49,2% | 32/65 |
+| Kunci jawaban modul | 47,8% | 32/67 |
+| Kunci jawaban modul | 49,2% | 32/65 |
 | Label Claude | 85,4% | 76/89 |
 | Gabungan | 69,2% | 108/156 |
-
-Kunci modul hanya ada untuk PU, PK, dan PM. Empat subtes lainnya dinilai dengan
-label dari Claude Opus 5, yang bukan kunci resmi. Sebagai pembanding, skor
-tebakan acak adalah 20% untuk lima opsi, 25% untuk soal perbandingan kuantitas
-PK (empat opsi), dan 12,5% untuk tabel Ya/Tidak berisi tiga pernyataan.
 
 ## PU per jenis soal
 
