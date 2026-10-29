@@ -2,11 +2,11 @@
 
 [English](README.md) · **Bahasa Indonesia**
 
-Pengujian **TypeSafe Jev** memakai soal **SNBT 2025**, ujian masuk perguruan
-tinggi negeri di Indonesia.
+Pengujian **TypeSafe Jev** ini memakai soal **SNBT 2025** - ujian masuk perguruan
+tinggi negeri di Indonesia dari Tim Mangkuk Mi Ayam.
 
-> **Soal di sini bukan naskah asli.** Naskah SNBT tidak pernah dirilis, jadi
-> soal-soal ini disusun ulang oleh komunitas berdasarkan ingatan peserta.
+**Soal di sini bukan naskah asli.** Naskah SNBT tidak pernah dirilis, jadi:
+> soal-soal ini disusun ulang oleh komunitas Tim MMA berdasarkan ingatan peserta.
 > Redaksinya bisa berbeda dari aslinya, beberapa soal ada yang cacat, dan
 > kuncinya dibuat oleh penyusun modul, bukan oleh panitia. Jadi semua angka di
 > sini mengukur Jev terhadap soal rekonstruksi, bukan terhadap SNBT yang
