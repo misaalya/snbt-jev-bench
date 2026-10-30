@@ -2,152 +2,66 @@
 
 [English](RESULTS.md) · **Bahasa Indonesia**
 
-Model yang digunakan adalah `jev-latest` dimana disaat pembuatan pengujian ini adalah `jev-1.13.0`, dijalankan 18 September
-2026. Total 156 soal, satu request per soal, gambar dikirim dalam bentuk teks yang di buat oleh Opus 5.
+Jev (`jev-1.13.0`, dipanggil sebagai `jev-latest`) mengerjakan 156 soal pada
+18 September 2026. Satu request per soal, gambar dikirim sebagai teks. Semua
+request berhasil pada percobaan pertama.
 
 ## Skor per subtes
 
 | Subtes | Skor | Soal | Acuan |
 |---|---|---|---|
-| LBE (Literasi Bahasa Inggris) | 100,0% | 20/20 | Kunci jawaban dari Claude |
-| LBI (Literasi Bahasa Indonesia) | 89,7% | 26/29 | Kunci jawaban dari Claude |
-| PBM (Pemahaman Bacaan dan Menulis) | 75,0% | 15/20 | Kunci jawaban dari Claude |
-| PPU (Pengetahuan dan Pemahaman Umum) | 75,0% | 15/20 | Kunci jawaban dari Claude |
-| PU (Penalaran Umum) | 60,0% | 18/30 | kunci jawaban modul |
-| PM (Penalaran Matematika) | 45,0% | 9/20 | kunci jawaban modul |
-| PK (Pengetahuan Kuantitatif) | 29,4% | 5/17 | kunci jawaban modul |
+| LBE (membaca bahasa Inggris) | 100,0% | 20/20 | Claude |
+| LBI (membaca bahasa Indonesia) | 89,7% | 26/29 | Claude |
+| PBM (membaca dan menulis) | 75,0% | 15/20 | Claude |
+| PPU (pengetahuan bahasa Indonesia) | 75,0% | 15/20 | Claude |
+| PU (penalaran verbal dan numerik) | 60,0% | 18/30 | MMA |
+| PM (matematika terapan) | 45,0% | 9/20 | MMA |
+| PK (penalaran kuantitatif) | 29,4% | 5/17 | MMA |
+| Semua (campuran) | 69,2% | 108/156 | campuran |
 
-## Skor berdasarkan jenis acuan
+## Arti angkanya
 
-Table ini membedakan skor berdasarkan kunci jawaban yang dibuat Claude, Kunci Modul MMA, dan Gabungan keduanya (154 Soal, dua soal yang meragukan ditinggalkan).
+- **MMA 47,8% (32/67)**: benar menurut kunci MMA. Kunci ini tidak resmi, dan
+  penyusunnya sendiri menyebut kunci PU belum tentu benar. Jika dua kunci PU yang
+  paling diragukan dikeluarkan, skornya jadi 49,2%.
+- **Claude 85,4% (76/89)**: dapat dianggap seberapa sering Jev sepakat dengan Claude Opus 5. Tidak ada
+  kunci resmi untuk subtes ini, jadi ini kecocokan, bukan akurasi.
+- **Gabungan 69,2%**: ringkasan dari dua acuan dan subtes berbeda, bukan satu
+  nilai ujian.
 
-| Kelompok soal | Skor | Soal |
-|---|---|---|
-| Kunci jawaban modul | 47,8% | 32/67 |
-| Kunci jawaban modul | 49,2% | 32/65 |
-| Label Claude | 85,4% | 76/89 |
-| Gabungan | 69,2% | 108/156 |
+Jev kuat di bahasa dan bacaan (LBE 100%, LBI 89,7%, PBM dan PPU 75%), lemah di
+kuantitatif (PK 29,4%, PM 45,0%). PU mencampur keduanya: verbal 75%, hitungan
+dan grafik 30%.
 
-## PU per jenis soal
+## Confidence
 
-PU berisi campuran soal verbal dan soal hitungan.
+- Saat Jev yakin 0,9-1,0: jawabannya cocok **96,7%**.
+- Saat confidence Jev di bawah 0,5: jawabannya cocok **34,0%**.
+- Jika 30% jawaban paling ragu dilewati: akurasi naik ke **85,2%**.
 
-| Soal | Skor |
-|---|---|
-| q1 sampai q20, penalaran verbal | 75,0% (15/20) |
-| q21 sampai q30, hitungan dan membaca diagram | 30,0% (3/10) |
+Dua soal tabel Ya/Tidak salah sebagai soal utuh (0/2), tapi 4 dari 6
+pernyataannya benar.
 
-## Kalibrasi
+## Catatan
 
-Dihitung dari 154 soal Choice. Dua soal tabel Ya/Tidak tidak dihitung karena
-tidak memberi nilai keyakinan Choice.
+- Jev dan Claude berbeda pada 13 dari 89 soal Claude. Jawaban Claude juga bukan
+  kunci emas, jadi perbedaan ini belum tentu kesalahan Jev.
+- Tiga soal isian (input teks) PK tidak dinilai; tersisa 67 dari 70 soal MMA.
+- Gambar dikirim sebagai teks, dan hanya ada satu run pada satu versi model, jadi
+  pengaruh gambar dan perkiraan galat belum diketahui.
 
-| Keyakinan | Skor | Soal |
-|---|---|---|
-| 0,0 - 0,5 | 34,0% | 16/47 |
-| 0,5 - 0,7 | 68,4% | 13/19 |
-| 0,7 - 0,9 | 75,0% | 21/28 |
-| 0,9 - 1,0 | 96,7% | 58/60 |
+## Biaya dan kecepatan
 
-Semakin tinggi keyakinan Jev, semakin sering jawabannya benar.
+Run ini memakai 106.637 token input dan 8.268 token output, dengan biaya sekitar
+$0,0045 pada tarif `score.py` ($0,042 per satu juta token input; cek harga
+terbaru). Median respons 883 ms, persentil ke-95 1,19 detik.
 
-Skor Brier: 0,253 untuk semua 154 soal, 0,402 untuk soal berkunci modul, dan
-0,143 untuk soal berlabel Claude. Makin kecil makin baik.
+## Hitung ulang
 
-Skor jika jawaban yang paling ragu tidak dihitung:
+```bash
+python3 scripts/score.py
+python3 scripts/score.py --combined
+python3 scripts/score.py --agreement --results data/results/claude_labeled.jsonl
+```
 
-| Soal yang dijawab | Gabungan | Kunci modul | Label Claude |
-|---|---|---|---|
-| 100% | 69,2% | 49,2% | 85,4% |
-| 90% | 77,0% | 53,4% | 88,8% |
-| 80% | 81,3% | 59,6% | 91,5% |
-| 70% | 85,2% | 63,0% | 91,9% |
-
-## Soal tabel Ya/Tidak
-
-| Cara hitung | Skor |
-|---|---|
-| Per soal (ketiga pernyataan harus benar) | 0/2 |
-| Per pernyataan | 4/6 |
-
-Dua pernyataan yang salah:
-
-- `PM-d1s1-q06` pernyataan 3: acuan "Tidak", Jev menjawab 0,59.
-- `PM-d1s1-q14` pernyataan 1: acuan "Ya", Jev menjawab 0,33.
-
-## Perbedaan dengan label Claude
-
-Tingkat kecocokan pada 89 soal, berdasarkan keyakinan label:
-
-| Keyakinan label | Cocok | Soal |
-|---|---|---|
-| high | 90,4% | 47/52 |
-| medium | 87,0% | 20/23 |
-| low | 64,3% | 9/14 |
-
-Ada 13 soal yang jawabannya berbeda:
-
-| Soal | Label | Keyakinan label | Jev | Keyakinan Jev |
-|---|---|---|---|---|
-| PPU-d1s1-q11 | E | low | A | 0,98 |
-| PBM-d1s1-q15 | D | medium | B | 0,87 |
-| LBI-d1s1-q26 | E | medium | A | 0,80 |
-| PPU-d1s1-q04 | A | medium | E | 0,80 |
-| LBI-d1s1-q13 | C | low | D | 0,70 |
-| PBM-d1s1-q03 | A | high | B | 0,56 |
-| PBM-d1s1-q04 | C | low | E | 0,54 |
-| LBI-d1s1-q09 | E | low | C | 0,46 |
-| PBM-d1s1-q16 | E | high | C | 0,44 |
-| PPU-d1s1-q20 | A | high | B | 0,40 |
-| PPU-d1s1-q17 | D | high | A | 0,27 |
-| PPU-d1s1-q16 | A | low | D | 0,12 |
-| PBM-d1s1-q10 | B | high | C | 0,10 |
-
-Label maupun jawaban Jev di tabel ini bukan kunci resmi.
-
-## Soal dengan kunci modul yang meragukan
-
-Tujuh soal PU sudah ditandai sebelum run ini (lihat
-`data/audit/module_key_audit.json`). Jawaban Jev dicantumkan sebagai
-pembanding. Kuncinya tidak diubah.
-
-| Soal | Kunci modul | Pemeriksaan | Penjawab buta | Jev | Keyakinan Jev |
-|---|---|---|---|---|---|
-| PU-d1-q05 | A | E | E | E | 0,90 |
-| PU-d1-q24 | E | A | A | A | 0,34 |
-| PU-d1-q18 | B | B | E | E | 0,59 |
-| PU-d1-q11 | E | D | D | E | 0,54 |
-| PU-d1-q10 | B | A | A | B | 0,41 |
-| PU-d1-q15 | B | D | D | A | 0,19 |
-| PU-d1-q20 | A | B | B | B | 0,39 |
-
-`PU-d1-q05` dan `PU-d1-q24` adalah dua soal yang tidak dihitung pada skor
-49,2%.
-
-## Biaya dan latensi
-
-| Run | Request | Token input | Token output | Biaya | p50 | p95 |
-|---|---|---|---|---|---|---|
-| Soal berkunci modul | 67 | 35.883 | 3.558 | $0,0015 | 884 ms | 1083 ms |
-| Soal berlabel Claude | 89 | 70.754 | 4.710 | $0,0030 | 882 ms | 1187 ms |
-| Total | 156 | 106.637 | 8.268 | $0,0045 | 883 ms | 1187 ms |
-
-Biaya dihitung dengan tarif $0,042 per satu juta token input, dan token output
-tidak ditagih. Ini tarif bawaan `scripts/score.py` (bisa diubah dengan
-`--rate-per-mtok`). Dokumentasi TypeSafe belum mencantumkan harga, jadi tarif
-ini perlu dicek ulang. Run memakai empat request sekaligus, tanpa respons 429
-atau 5xx.
-
-## Batasan
-
-- Soal adalah rekonstruksi komunitas, dan kunci modul bukan kunci resmi. Lihat
-  [README](README.id.md).
-- Tiga soal isian PK tidak dihitung, jadi yang dinilai 67 dari 70 soal
-  berkunci modul.
-- Gambar dikirim sebagai teks, bukan gambar asli. Belum ada run tanpa
-  transkrip, jadi pengaruh transkrip terhadap skor belum diketahui.
-- Hanya satu run dengan satu versi model, jadi belum ada perkiraan galat.
-
-Semua respons tersimpan di `data/results/`, satu baris JSON per soal. Hitung
-ulang dengan `python3 scripts/score.py` dan `python3 scripts/score.py
---combined`. Untuk run baru, jalankan `python3 scripts/run_bench.py`.
+Semua respons ada di `data/results/`.
