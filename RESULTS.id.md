@@ -19,7 +19,7 @@ request berhasil pada percobaan pertama.
 | PK (penalaran kuantitatif) | 29,4% | 5/17 | MMA |
 | Semua (campuran) | 69,2% | 108/156 | campuran |
 
-## Arti angkanya
+## Score notes
 
 - **MMA 47,8% (32/67)**: benar menurut kunci MMA. Kunci ini tidak resmi, dan
   penyusunnya sendiri menyebut kunci PU belum tentu benar. Jika dua kunci PU yang

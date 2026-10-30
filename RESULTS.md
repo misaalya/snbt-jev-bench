@@ -19,12 +19,12 @@ succeeded on the first try.
 | PK (quantitative reasoning) | 29.4% | 5/17 | MMA |
 | All (mixed) | 69.2% | 108/156 | mixed |
 
-## What the numbers mean
+## Score notes
 
-- **MMA 47.8%**: correct according to the MMA key. The key is unofficial, and
+- **MMA 47.8% (32/67)**: correct according to the MMA key. The key is unofficial, and
   the module's authors say the PU answers are uncertain. Dropping the two most
   disputed PU keys gives 49.2%.
-- **Claude 85.4%**: how often Jev agrees with Claude Opus 5. There is no
+- **Claude 85.4% (76/89)**: how often Jev agrees with Claude Opus 5. There is no
   official key for these subtests, so this is agreement, not accuracy.
 - **Combined 69.2%**: a summary of two references and different subtests, not
   one exam score.
