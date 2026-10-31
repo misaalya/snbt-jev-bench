@@ -24,8 +24,9 @@ request berhasil pada percobaan pertama.
 - **MMA 47,8% (32/67)**: benar menurut kunci MMA. Kunci ini tidak resmi, dan
   penyusunnya sendiri menyebut kunci PU belum tentu benar. Jika dua kunci PU yang
   paling diragukan dikeluarkan, skornya jadi 49,2%.
-- **Claude 85,4% (76/89)**: dapat dianggap seberapa sering Jev sepakat dengan Claude Opus 5. Tidak ada
-  kunci resmi untuk subtes ini, jadi ini kecocokan, bukan akurasi.
+- **Claude 85,4% (76/89)**: dapat dianggap seberapa sering Jev sepakat dengan Claude Opus 5,
+  perlu diingat bahwa label Claude dominan di bahasa dan bacaan.
+  Tidak ada kunci resmi untuk subtes ini, jadi ini kecocokan dengan opus 5, bukan akurasi.
 - **Gabungan 69,2%**: ringkasan dari dua acuan dan subtes berbeda, bukan satu
   nilai ujian.
 
